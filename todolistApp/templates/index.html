@@ -1,4 +1,32 @@
 
+{% extends 'base.html' %} 
+
+{% block title %}
+Tasks - 
+{% endblock title %}
+{%  block content %}
+
+<h2> this is todolist App </h2>
 
 
-<h1> hello Welcome to Todolist App </h1>
+<form method="post">
+    {% csrf_token %}
+        <!-- {{task_form}} to display all -->
+        {{task_form.title}} <!-- to display particular field-->
+        <button type="submit">SUBMIT</button>
+    </form>
+    <!---- this chnages -->
+    <ol>
+        {% for task in tasks %}
+            <li> 
+                {% if task.completed == True %}
+                <strike> {{task.title }} </strike>
+                {% else %}
+                    {{task.title }}
+                {% endif %}
+                | <a href="{% url "update_task" task.id %}"> Update </a> 
+            </li>
+        {% endfor %}
+    </ol>
+    
+{%endblock%}
