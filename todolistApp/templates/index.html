@@ -6,27 +6,39 @@ Tasks -
 {% endblock title %}
 {%  block content %}
 
-<h2> this is todolist App </h2>
+<div class="card">
+    <div class="card-header">
+        <h1 class="text-center"> TodoList App  </h1>
+    </div>
 
+    <div class="card-body">
+        <form method ="POST">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <!-- {{task_form}} to display all -->
+                {{task_form.title}} <!-- to display particular field-->
+                <button type="submit" class="btn btn-primary btn-lg" >Add</button>
+            </div>  
+        </form>
+            <!---- this chnages -->
+            <h4 class="bg-warning text-light py-2 rounded text-center">My Tasks:</h4>
 
-<form method="post">
-    {% csrf_token %}
-        <!-- {{task_form}} to display all -->
-        {{task_form.title}} <!-- to display particular field-->
-        <button type="submit">SUBMIT</button>
-    </form>
-    <!---- this chnages -->
-    <ol>
-        {% for task in tasks %}
-            <li> 
-                {% if task.completed == True %}
-                <strike> {{task.title }} </strike>
-                {% else %}
-                    {{task.title }}
-                {% endif %}
-                | <a href="{% url "update_task" task.id %}"> Update </a> 
-            </li>
-        {% endfor %}
-    </ol>
-    
+            <ul class="list-group">
+                {% for task in tasks %}
+                    <li class= "list-group-item list-group-item-action"> 
+                        {% if task.completed == True %}
+                        <strike> {{task.title }} </strike>
+                        {% else %}
+                            {{task.title }}
+                        {% endif %}
+
+                        <div class="float-rigth">
+                            <a class="btn btn-info btn-sm" href="{% url "update_task" task.id %}"> Update </a> 
+                            <a class="btn btn-danger btn-sm" href="{% url "delete_task" task.id %}"> Update </a> 
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+    </div>
+</div>
 {%endblock%}

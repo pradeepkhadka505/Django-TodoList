@@ -1,14 +1,18 @@
-from django.shortcuts import render, HttpResponse, redirect
-from .forms import TaskForm 
+from django.shortcuts import render, redirect
+from todolist.forms import TaskForm 
 
 # Create your views here.
 def my_todolist(request):
+    # error = ''
     form = TaskForm()
     if request.method == "POST":
         form = TaskForm(request.POST)
         if form.is_valid():
             form.save()
         return redirect('index')
+        # else :
+        #     error= 'The form has incorate value '
+
     tasks = Task.objects.all()
     return render(request, 'index.html', {'form_task': form, 'tasks': tasks})
 
